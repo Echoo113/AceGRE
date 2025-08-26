@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AceGRE - Welcome & Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <!-- Tech Background Elements -->
+  <div class="tech-grid"></div>
+  <div class="tech-particles">
+    <div class="tech-particle"></div>
+    <div class="tech-particle"></div>
+    <div class="tech-particle"></div>
+    <div class="tech-particle"></div>
+    <div class="tech-particle"></div>
+    <div class="tech-particle"></div>
+    <div class="tech-particle"></div>
+    <div class="tech-particle"></div>
+    <div class="tech-particle"></div>
+  </div>
+
+  <!-- Language Switcher (Top Right) -->
+  <div class="language-switcher">
+    <button class="lang-switch-btn active" data-lang="en">EN</button>
+    <span class="lang-divider">/</span>
+    <button class="lang-switch-btn" data-lang="zh">中文</button>
+  </div>
+
+  <!-- Main Two-Column Layout -->
+  <div class="main-layout">
+    <!-- Left Column: Feature Preview Cards -->
+    <div class="feature-section">
+      <div class="feature-header">
+        <h1 class="main-logo">AceGRE</h1>
+        <p class="main-subtitle">Master the GRE, Master Your Future</p>
+      </div>
+      
+      <div class="feature-grid">
+        <!-- Word Learning Card -->
+        <div class="feature-card" data-feature="word">
+          <div class="feature-icon">📘</div>
+          <h3 class="feature-title">Word Learning</h3>
+          <p class="feature-desc">High-frequency vocabulary · AI root analysis</p>
+        </div>
+        
+        <!-- Math Card -->
+        <div class="feature-card" data-feature="math">
+          <div class="feature-icon">📐</div>
+          <h3 class="feature-title">Math Tutorial</h3>
+          <p class="feature-desc">Test point breakdown · Problem search</p>
+        </div>
+        
+        <!-- Reading Card -->
+        <div class="feature-card" data-feature="reading">
+          <div class="feature-icon">📚</div>
+          <h3 class="feature-title">Reading & Fill-in</h3>
+          <p class="feature-desc">Logical guidance · Dual-line method</p>
+        </div>
+        
+        <!-- Writing Card -->
+        <div class="feature-card" data-feature="writing">
+          <div class="feature-icon">✍️</div>
+          <h3 class="feature-title">Academic Writing</h3>
+          <p class="feature-desc">Issue structure · AI grading · Outline</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Login Form -->
+    <div class="login-section">
+      <div class="login-container">
+        <div class="login-header">
+          <h2 class="login-title">Welcome Back</h2>
+          <p class="login-subtitle">Please log in to continue your GRE journey</p>
+        </div>
+
+        <!-- Login Form -->
+        <form class="login-form" id="loginForm">
+          <div class="input-group">
+            <input type="email" id="email" placeholder="Email Address" required>
+          </div>
+          
+          <div class="input-group">
+            <input type="password" id="password" placeholder="Password" required>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-primary">Login</button>
+          </div>
+        </form>
+
+        <!-- Sign Up Note -->
+        <div class="signup-note">
+          Don't have an account? 
+          <a href="#" onclick="showRegister(); return false;" class="signup-link" data-action="register" id="signupLink">Create Account</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Enhanced Register Modal -->
+  <div class="modal-overlay" id="registerModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Create Your AceGRE Account</h2>
+        <button class="close-btn" onclick="hideRegister()">×</button>
+      </div>
+      
+      <div class="modal-subtitle">
+        Join thousands of students mastering the GRE
+      </div>
+      
+      <form class="register-form" id="registerForm">
+        <div class="input-group">
+          <input type="text" id="fullName" placeholder="Full Name" required>
+        </div>
+        
+        <div class="input-group">
+          <input type="email" id="registerEmail" placeholder="Email Address" required>
+        </div>
+        
+        <div class="input-group">
+          <input type="password" id="registerPassword" placeholder="Password" required>
+          <div class="password-strength" id="passwordStrength"></div>
+        </div>
+        
+        <div class="input-group">
+          <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">Create Account</button>
+        </div>
+      </form>
+
+      <div class="modal-footer">
+        <p>Already have an account? <a href="#" onclick="hideRegister()">Log in</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

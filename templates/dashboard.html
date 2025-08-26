@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AceGRE - Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Tech Background Elements -->
+    <div class="tech-grid"></div>
+    <div class="tech-particles">
+        <div class="tech-particle"></div>
+        <div class="tech-particle"></div>
+        <div class="tech-particle"></div>
+        <div class="tech-particle"></div>
+        <div class="tech-particle"></div>
+        <div class="tech-particle"></div>
+        <div class="tech-particle"></div>
+        <div class="tech-particle"></div>
+        <div class="tech-particle"></div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>AceGRE</h2>
+            </div>
+            <div class="nav-right">
+                <div class="language-switch">
+                    <button class="lang-btn" onclick="switchLanguage('{{ 'zh' if language == 'en' else 'en' }}')">
+                        {{ '中文' if language == 'en' else 'English' }}
+                    </button>
+                </div>
+                <div class="user-menu" onclick="toggleUserDropdown()">
+                    <span class="username">{{ user_name }}</span>
+                    <i class="fas fa-user-circle"></i>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="/logout">{{ 'Logout' if language == 'en' else '退出登录' }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="dashboard-header">
+            <h1>{{ 'Welcome to AceGRE' if language == 'en' else '欢迎来到 AceGRE' }}</h1>
+            <p>{{ 'Choose your study area to begin your GRE preparation journey' if language == 'en' else '选择你的学习领域，开始你的 GRE 备考之旅' }}</p>
+        </div>
+
+        <!-- Four Main Study Areas -->
+        <div class="study-areas">
+            <!-- Word Study -->
+            <div class="study-card card-vocabulary" onclick="console.log('Word learning clicked'); window.location.href='/word-learning'">
+                <div class="card-icon">📘</div>
+                <div class="card-content">
+                    <h3>{{ 'Word Learning' if language == 'en' else '单词学习' }}</h3>
+                    <p>{{ 'Text completion · High-frequency words · AI memory assistance' if language == 'en' else '六选二 · 高频词 · AI 记忆辅助' }}</p>
+                    <div class="progress-info">
+                        <span class="level">{{ 'Level' if language == 'en' else '等级' }}: {{ study_progress.get('word', {}).get('level', 1) }}</span>
+                        <span class="completed">{{ study_progress.get('word', {}).get('completed', 0) }} {{ 'completed' if language == 'en' else '已完成' }}</span>
+                    </div>
+                </div>
+                <div class="card-enter">
+                    <span>{{ 'Enter' if language == 'en' else '进入' }}</span>
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+
+            <!-- Quantitative -->
+            <div class="study-card card-quantitative" onclick="navigateTo('math')">
+                <div class="card-icon">📐</div>
+                <div class="card-content">
+                    <h3>{{ 'Math Tutorial' if language == 'en' else '数学讲解' }}</h3>
+                    <p>{{ 'AI analysis of test points · Difficult problem explanations' if language == 'en' else 'AI 拆解考点 · 难题解析' }}</p>
+                    <div class="progress-info">
+                        <span class="level">{{ 'Level' if language == 'en' else '等级' }}: {{ study_progress.get('math', {}).get('level', 1) }}</span>
+                        <span class="completed">{{ study_progress.get('math', {}).get('completed', 0) }} {{ 'completed' if language == 'en' else '已完成' }}</span>
+                    </div>
+                </div>
+                <div class="card-enter">
+                    <span>{{ 'Enter' if language == 'en' else '进入' }}</span>
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+
+            <!-- Verbal -->
+            <div class="study-card card-verbal" onclick="navigateTo('reading')">
+                <div class="card-icon">📚</div>
+                <div class="card-content">
+                    <h3>{{ 'Reading & Fill-in' if language == 'en' else '填空与阅读' }}</h3>
+                    <p>{{ 'Logical guidance · Dual-line reading method' if language == 'en' else '逻辑引导 · 双线阅读法' }}</p>
+                    <div class="progress-info">
+                        <span class="level">{{ 'Level' if language == 'en' else '等级' }}: {{ study_progress.get('reading', {}).get('level', 1) }}</span>
+                        <span class="completed">{{ study_progress.get('reading', {}).get('completed', 0) }} {{ 'completed' if language == 'en' else '已完成' }}</span>
+                    </div>
+                </div>
+                <div class="card-enter">
+                    <span>{{ 'Enter' if language == 'en' else '进入' }}</span>
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+
+            <!-- Academic Writing -->
+            <div class="study-card card-writing" onclick="navigateTo('writing')">
+                <div class="card-icon">✍️</div>
+                <div class="card-content">
+                    <h3>{{ 'Academic Writing' if language == 'en' else '学术写作' }}</h3>
+                    <p>{{ 'Issue breakdown · AI grading · Thinking analysis' if language == 'en' else 'Issue 拆题 · AI 批改 · 思路分析' }}</p>
+                    <div class="progress-info">
+                        <span class="level">{{ 'Level' if language == 'en' else '等级' }}: {{ study_progress.get('writing', {}).get('level', 1) }}</span>
+                        <span class="completed">{{ study_progress.get('writing', {}).get('completed', 0) }} {{ 'completed' if language == 'en' else '已完成' }}</span>
+                    </div>
+                </div>
+                <div class="card-enter">
+                    <span>{{ 'Enter' if language == 'en' else '进入' }}</span>
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- AI MetalSupport Floating Button -->
+    <div class="ai-support" onclick="toggleAIChat()" title="{{ 'AI Learning Assistant' if language == 'en' else 'AI 学习助手' }}">
+        <div class="ai-icon">🤖</div>
+    </div>
+
+    <!-- AI Chat Window (Hidden by default) -->
+    <div class="ai-chat-window" id="aiChatWindow">
+        <div class="chat-header">
+            <h4>{{ 'AI Learning Assistant' if language == 'en' else 'AI 学习助手' }}</h4>
+            <button class="close-btn" onclick="toggleAIChat()">×</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="ai-message">
+                {{ 'Hello! I\'m your GRE study assistant. How can I help you today?' if language == 'en' else '你好！我是你的 GRE 学习助手。今天需要什么帮助吗？' }}
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="messageInput" placeholder="{{ 'Type your question...' if language == 'en' else '输入你的问题...' }}">
+            <button onclick="sendMessage()">{{ 'Send' if language == 'en' else '发送' }}</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

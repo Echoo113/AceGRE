@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Learning - AceGRE</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/word_learning.css') }}">
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="tech-grid"></div>
+    <div class="tech-particles">
+        <div class="tech-particle"></div>
+        <div class="tech-particle"></div>
+        <div class="tech-particle"></div>
+        <div class="tech-particle"></div>
+        <div class="tech-particle"></div>
+        <div class="tech-particle"></div>
+        <div class="tech-particle"></div>
+        <div class="tech-particle"></div>
+        <div class="tech-particle"></div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="word-header">
+        <div class="header-container">
+            <div class="logo">
+                <h1>AceGRE</h1>
+                <span>Word Learning</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="/dashboard" class="nav-link">Dashboard</a>
+                <a href="#" class="nav-link active">Word Learning</a>
+                <a href="#" class="nav-link">Practice</a>
+                <a href="#" class="nav-link">Progress</a>
+            </nav>
+            <div class="user-info">
+                <span>{{ user_name }}</span>
+                <button onclick="logout()" class="logout-btn">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="word-main">
+        <!-- Word Display Section -->
+        <section class="word-display">
+            <div class="word-card">
+                <div class="word-header-section">
+                    <h2 class="current-word" id="currentWord">Loading...</h2>
+                    <div class="word-controls">
+                        <button class="pronounce-btn" onclick="pronounceWord()">🔊</button>
+                        <button class="favorite-btn" onclick="toggleFavorite()">⭐</button>
+                    </div>
+                </div>
+                
+                <div class="word-info">
+                    <div class="word-pronunciation" id="wordPronunciation"></div>
+                    <div class="word-level" id="wordLevel"></div>
+                </div>
+
+                <div class="word-definition" id="wordDefinition">
+                    <h3>Definition</h3>
+                    <div class="definition-content"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Learning Sections -->
+        <section class="learning-sections">
+            <!-- GRE Six-Choice Synonyms -->
+            <div class="learning-module synonym-module">
+                <h3>GRE六选二同义词</h3>
+                <div class="synonym-question" id="synonymQuestion">
+                    <p class="question-text">Select two words that are most similar in meaning to the highlighted word:</p>
+                    <div class="synonym-options" id="synonymOptions">
+                        <!-- Options will be populated by JavaScript -->
+                    </div>
+                    <div class="synonym-result" id="synonymResult"></div>
+                    <button class="check-btn" onclick="checkSynonyms()">Check Answer</button>
+                </div>
+            </div>
+
+            <!-- Etymology Analysis -->
+            <div class="learning-module etymology-module">
+                <h3>词根词缀解析</h3>
+                <div class="etymology-content" id="etymologyContent">
+                    <div class="etymology-breakdown">
+                        <div class="etymology-parts" id="etymologyParts"></div>
+                        <div class="etymology-explanation" id="etymologyExplanation"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Memory Methods -->
+            <div class="learning-module memory-module">
+                <h3>记忆方法</h3>
+                <div class="memory-content" id="memoryContent">
+                    <div class="memory-tabs">
+                        <button class="memory-tab active" onclick="showMemoryMethod('story')">联想故事</button>
+                        <button class="memory-tab" onclick="showMemoryMethod('phonetic')">谐音记忆</button>
+                        <button class="memory-tab" onclick="showMemoryMethod('visual')">视觉记忆</button>
+                    </div>
+                    <div class="memory-methods">
+                        <div class="memory-method active" id="storyMethod">
+                            <div class="story-content"></div>
+                        </div>
+                        <div class="memory-method" id="phoneticMethod">
+                            <div class="phonetic-content"></div>
+                        </div>
+                        <div class="memory-method" id="visualMethod">
+                            <div class="visual-content"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Definition Practice -->
+            <div class="learning-module definition-module">
+                <h3>释义练习</h3>
+                <div class="definition-practice" id="definitionPractice">
+                    <div class="practice-question">
+                        <p>What does "<span id="practiceWord"></span>" mean?</p>
+                        <div class="definition-options" id="definitionOptions">
+                            <!-- Options will be populated by JavaScript -->
+                        </div>
+                        <div class="definition-result" id="definitionResult"></div>
+                        <button class="check-btn" onclick="checkDefinition()">Check Answer</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress and Controls -->
+        <section class="word-controls-section">
+            <div class="progress-container">
+                <div class="session-progress">
+                    <span>Progress: <span id="currentProgress">0</span> / <span id="totalWords">20</span></span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+                <div class="difficulty-selector">
+                    <label>Difficulty:</label>
+                    <select id="difficultyLevel" onchange="changeDifficulty()">
+                        <option value="easy">Easy</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="hard">Hard</option>
+                        <option value="extreme">Extreme</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="action-btn secondary" onclick="skipWord()">Skip Word</button>
+                <button class="action-btn primary" onclick="nextWord()">Next Word</button>
+                <button class="action-btn success" onclick="markLearned()">Mark as Learned</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p>Loading new word...</p>
+    </div>
+
+    <!-- Notification System -->
+    <div class="notification" id="notification"></div>
+
+    <script src="{{ url_for('static', filename='js/word_learning.js') }}"></script>
+</body>
+</html>
