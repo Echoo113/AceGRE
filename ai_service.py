@@ -11,7 +11,7 @@ from typing import Dict, List, Optional
 class AIService:
     def __init__(self):
         # API配置 - 在生产环境中应该从环境变量读取
-        self.openai_api_key = os.getenv('OPENAI_API_KEY', 'your_openai_api_key_here')
+        self.openai_api_key = os.getenv('OPENAI_API_KEY')
         self.ai_provider = os.getenv('AI_PROVIDER', 'openai')
         self.model_name = os.getenv('OPENAI_MODEL', 'gpt-3.5-turbo')
         
